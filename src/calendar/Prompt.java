@@ -9,29 +9,35 @@ public class Prompt {
 	public void runPrompt() {
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
-		String in_cmd = "0";
+		boolean isLoop = true;
 
 		printMenu();
-		while (!in_cmd.equals("q")) {
+		while (isLoop) {
 			System.out.println("command (1, 2, 3, h, q)");
 			printPrompt();
-			in_cmd = scanner.next();
+			String in_cmd = scanner.next();
 
-			if (in_cmd.equals("1"))
+			switch (in_cmd) {
+			case "1":
 				prompt_addPlan(scanner, cal);
-			else if (in_cmd.equals("2"))
+				break;
+			case "2":
 				prompt_searchPlan(scanner, cal);
-			else if (in_cmd.equals("3"))
+				break;
+			case "3":
 				printCalendar(scanner, cal);
-			else if (in_cmd.equals("h"))
+				break;
+			case "h":
 				printHelpMsg();
-			else if (in_cmd.equals("q")) {
+				break;
+			case "q":
+				isLoop = false;
 				System.out.println("Bye!");
 				break;
-			} else {
+			default:
 				System.out.println("input the correct command!");
+				break;
 			}
-
 		}
 
 		scanner.close();
@@ -55,6 +61,9 @@ public class Prompt {
 		if (c.addPlan(in_date, in_plan)) {
 			System.out.println("saved plan");
 		}
+		else {
+			System.out.println("Fail to save plan!");
+		}
 	}
 
 	public void prompt_searchPlan(Scanner s, Calendar c) {
@@ -75,8 +84,8 @@ public class Prompt {
 	}
 
 	public void printCalendar(Scanner s, Calendar c) {
-		System.out.println("*****input the year and month*****");
-		System.out.println("program exit : year = -1");
+		System.out.println("input the year and month");
+		System.out.println("calendar search exit : year = -1");
 		System.out.println("eX) 2021 1 / 2020 7");
 
 		int input_month = 1;
@@ -84,15 +93,14 @@ public class Prompt {
 
 		while (input_year != -1) {
 			printPrompt();
-
+			
 			input_year = s.nextInt();
-			input_month = s.nextInt();
-
 			if (input_year == -1) {
 				System.out.println("Program exit!");
 				break;
 			}
-
+			
+			input_month = s.nextInt();
 			if (input_year <= 0) {
 				System.out.println("input the correct year!");
 				continue;
@@ -108,7 +116,7 @@ public class Prompt {
 	}
 
 	public void printHelpMsg() {
-
+		System.out.println("Help u");
 	}
 
 }

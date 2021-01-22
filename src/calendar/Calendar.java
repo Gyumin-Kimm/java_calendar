@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Calendar {
 
@@ -76,28 +75,25 @@ public class Calendar {
 	}
 
 	public boolean addPlan(String Date, String Plan) {
-		try {
-			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(Date);
-			planMap.put(date, Plan);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+		planMap.put(getDateFromString(Date), Plan);
+		return true;
 	}
 
 	public String searchPlan(String Date) {
+		return planMap.get(getDateFromString(Date));
+	}
+
+	public static Date getDateFromString(String Date) {
+		Date date = null;
 		try {
-			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(Date);
-			return planMap.get(date);
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(Date);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return date;
 	}
 
 	public static void main(String[] args) {
-
 		Prompt prompt = new Prompt();
 		prompt.runPrompt();
 	}
